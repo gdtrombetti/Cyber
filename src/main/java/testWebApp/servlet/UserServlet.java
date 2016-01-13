@@ -24,6 +24,7 @@ public class UserServlet extends HttpServlet
   }
  
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+
   {
     StringBuffer sb = new StringBuffer();
     try 
@@ -42,18 +43,22 @@ public class UserServlet extends HttpServlet
     {
       joUser = (JSONObject) parser.parse(sb.toString());
     } catch (ParseException e) { e.printStackTrace(); }
-    
+
     String name = (String) joUser.get("name");
     String email = (String) joUser.get("email");
     String telephone = (String) joUser.get("telephone");
-    System.out.println(telephone);
     String street = (String) joUser.get("street");
     String city = (String) joUser.get("city");
     String state = (String) joUser.get("state");
     String zip = (String) joUser.get("zip");
 
-    response.setContentType("text/html");
+    response.setContentType("application/json");
+    PrintWriter out = response.getWriter();
+    out.print(joUser);
+    out.flush();
+    out.close();
     DBconn dbconn = new DBconn();
     dbconn.addUser(name, email, telephone, street, city, state, zip);
+    
   }
 }
