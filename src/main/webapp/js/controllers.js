@@ -1,17 +1,27 @@
  var app = angular.module('MyApp', [])
-    app.controller('UserController', function ($scope) {
+    app.controller('UserController', function ($scope, $http) {
         $scope.IsVisible = false;
+        $scope.ListVisible = false;
         $scope.ShowHide = function () {
             $scope.IsVisible = $scope.IsVisible ? false : true;
         }
+        $scope.ShowList = function () {
+            $scope.ListVisible = $scope.ListVisible ? false : true;
+        }
+        $scope.get_user = function() {
+    		$http.get('getUser').
+    		success(function(data, status, headers, config){
+    			console.log(data);
+    		}).
+    		error(function(data, status, headers, config) {
+    			alert( "failure message: " + JSON.stringify({data: data}));
+    		});
+    	};
     });
+
  app.controller('FormController', function ($scope, $http) {
-	 $scope.submit = function (form) {
-     $scope.errMsg = "";
-     $scope.successMsg = "";
+	 $scope.submit = function (form, user) {
      $scope.submitted = true;
-     $scope.IsVisible = $scope.IsVisible ? false : true;
-     $scope.user_data = "";
      if (form.$invalid) {
          return;
        }
@@ -24,7 +34,7 @@
 				state : $scope.state,
 				zip : $scope.zip				
 		};
-     	var res = $http.post('add_user', dataObj);
+     	var res = $http.post('addUser', dataObj);
 		res.success(function(data, status, headers, config) {
 			$scope.rname = data.name;
 			$scope.remail = data.email;
@@ -34,6 +44,13 @@
 			$scope.rstate = data.state;
 			$scope.rzip = data.zip;
 			$scope.show = true;
+			$scope.name = "";
+			$scope.email = "";
+			$scope.telephone = "";
+			$scope.street = "";
+			$scope.city = "";
+			$scope.state = "";
+			$scope.zip = "";
 		});
 		res.error(function(data, status, headers, config) {
 			alert( "failure message: " + JSON.stringify({data: data}));

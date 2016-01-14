@@ -1,15 +1,21 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
-<servlet>
-    <servlet-name>add_user</servlet-name>
-    <servlet-class>testWebApp.servlet.UserServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>add_user</servlet-name>
-    <url-pattern>/add_user</url-pattern>
-  </servlet-mapping>
+	<display-name>Archetype Created Web Application</display-name>
+	<servlet>
+		<servlet-name>getUser</servlet-name>
+		<servlet-class>servletPackage.ListServer</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>addUser</servlet-name>
+		<servlet-class>servletPackage.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>addUser</servlet-name>
+		<url-pattern>/addUser</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>getUser</servlet-name>
+		<url-pattern>/getUser</url-pattern>
+	</servlet-mapping>
 </web-app>

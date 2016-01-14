@@ -10,17 +10,20 @@
 		<body>
 			<h1>Test</h1>
 				<div class="container">
-					<div class="row">
-						<div class="col-lg-5">
 						<div data-ng-controller="UserController">
+							<div class="btn-group-vertical">
+								<input type="button" class="btn btn-default btn-lg" value="List" data-ng-click="ShowList()" />
 								<input type="button" class="btn btn-default btn-lg" value="Create" data-ng-click="ShowHide()" />
-		       				 <br />
-		       				 <br />
-		       			 <div data-ng-show="IsVisible">
+			       				 <br />
+			       				 <br />
+			       				</div>
+			       				<div data-ng-show="ListVisible"> 
+								<input type="button" class="btn btn-default btn-lg" value="List" data-ng-click="get_user()" />
+								</div>
+		       			 	<div data-ng-show="IsVisible">
 		       			 		<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
 		  						<div data-ng-show="showTheForm = true">
 		  						<form name="user" data-toggle="validator" novalidate role="form" data-ng-controller="FormController">
-		    				
 				    				<div class="control-group" data-ng-class="{true: 'error'}[submitted && form.name.$invalid]">
 								      <label for="name">Name</label>
 								      <span class="label label-danger" data-ng-show="submitted && user.name.$error.required">Required!</span>
@@ -35,7 +38,7 @@
 							
 									<div class="form-group">
 								      <label for="telephone">Telephone</label>
-								      <span class="label label-danger" data-ng-show="form.name.$invalid && !form.name.$pristine">Required!</span>
+								      <span class="label label-danger" data-ng-show="submitted && user.telephone.$error.required">Required!</span>
 								      <input type="text" name="telephone" data-ng-model="telephone" class="form-control" required>
 									</div>
 							
@@ -63,7 +66,7 @@
 									      <input type="text" name="zip" data-ng-model="zip" class="form-control" required>
 									</div>
 									 <div class="form-group">
-		    							  <button data-ng-click="submit(user)" class="btn btn-default btn-lg">Submit</button>
+		    							  <button data-ng-click="submit(user,form);" class="btn btn-default btn-lg">Submit</button>
 		    							  <div data-ng-if="show == true">
 			    							  <h2>User Added!</h2>
 			    							  <h4>Name - {{rname}}</h4>
@@ -80,7 +83,7 @@
   						</div>
   					</div>
 				</div>
-			</div>
+			
 		</div>
 	</body>
 </html>
