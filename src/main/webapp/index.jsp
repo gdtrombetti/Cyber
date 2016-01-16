@@ -12,13 +12,57 @@
 				<div class="container">
 						<div data-ng-controller="UserController">
 							<div class="btn-group-vertical">
-								<input type="button" class="btn btn-default btn-lg" value="List" data-ng-click="ShowList()" />
+								<input type="button" class="btn btn-default btn-lg" value="List" data-ng-click="ShowList()"/>
+								<br/>
 								<input type="button" class="btn btn-default btn-lg" value="Create" data-ng-click="ShowHide()" />
+								<br/>
+								<input type="button" class="btn btn-default btn-lg" value="Delete" data-ng-click="ShowDelete()" />
+								<br/>
+								<input type="button" class="btn btn-default btn-lg" value="Update" data-ng-click="ShowUpdate()" />
 			       				 <br />
 			       				 <br />
 			       				</div>
 			       				<div data-ng-show="ListVisible"> 
-								<input type="button" class="btn btn-default btn-lg" value="List" data-ng-click="get_user()" />
+									<div data-ng-if="noUsers">
+										<h2>{{noUsers}}</h2>
+									</div>
+									<div data-ng-if="showTable">
+									<table>
+    									<tr>
+        									<th data-ng-repeat="(key, val) in userList[0]">{{key}}</th>
+    									</tr>
+    									<tr data-ng-repeat="user in userList">
+       										 <td data-ng-repeat="(key, val) in user">{{val}}</td>
+    									</tr>
+									</table>
+									</div>
+									
+								</div>
+								<div data-ng-show="UpdateVisible">
+									 <form novalidate role="form" name="updateUser">
+									 <label for="searchId2">ID</label>
+									     <input type="text" name="searchId2" data-ng-model="searchId2" class="form-control" required>
+									  <label for="updateField">Column To Update</label>   
+									     <input type="text" name="updateField" data-ng-model="updateField" class="form-control" required>
+									   <label for="newValue">Update Value</label>  
+									     <input type="text" name="newValue" data-ng-model="newValue" class="form-control" required>
+									     <br/>
+									     <input type="button" class="btn btn-default btn-lg" value="Update User" data-ng-click="update_user()" />
+									     <div data-ng-if="updateStatus == 200">
+			    							  <h2>{{updateData}}</h2>
+		    							  </div>
+									</form>
+								</div>
+								<div data-ng-show="DeleteVisible">
+									 <form novalidate role="form" name="delUser">
+									 	<label for="searchId">ID</label>
+									      <input type="text" name="searchId" data-ng-model="searchId" class="form-control" required>
+									      <br/>
+									      <input type="button" class="btn btn-default btn-lg" value="Find User By Id!" data-ng-click="del_user()" />
+									      <div data-ng-if="showStatus == true">
+			    							  <h2>{{delStatus}}</h2>
+		    							  </div>
+									</form>
 								</div>
 		       			 	<div data-ng-show="IsVisible">
 		       			 		<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
@@ -83,7 +127,5 @@
   						</div>
   					</div>
 				</div>
-			
-		</div>
 	</body>
 </html>

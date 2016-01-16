@@ -7,6 +7,14 @@
 		<servlet-class>servletPackage.ListServer</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>deleteUser</servlet-name>
+		<servlet-class>servletPackage.DeleteServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>updateUser</servlet-name>
+		<servlet-class>servletPackage.UpdateServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>addUser</servlet-name>
 		<servlet-class>servletPackage.UserServlet</servlet-class>
 	</servlet>
@@ -17,5 +25,13 @@
 	<servlet-mapping>
 		<servlet-name>getUser</servlet-name>
 		<url-pattern>/getUser</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>deleteUser</servlet-name>
+		<url-pattern>/deleteUser</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>updateUser</servlet-name>
+		<url-pattern>/updateUser</url-pattern>
 	</servlet-mapping>
 </web-app>

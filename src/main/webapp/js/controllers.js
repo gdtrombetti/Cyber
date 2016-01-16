@@ -2,21 +2,64 @@
     app.controller('UserController', function ($scope, $http) {
         $scope.IsVisible = false;
         $scope.ListVisible = false;
+        $scope.DeleteVisible = false;
         $scope.ShowHide = function () {
             $scope.IsVisible = $scope.IsVisible ? false : true;
         }
         $scope.ShowList = function () {
             $scope.ListVisible = $scope.ListVisible ? false : true;
+            $scope.get_users();
         }
-        $scope.get_user = function() {
-    		$http.get('getUser').
+        $scope.ShowDelete = function () {
+            $scope.DeleteVisible = $scope.DeleteVisible ? false : true;
+        }
+        $scope.ShowUpdate = function () {
+            $scope.UpdateVisible = $scope.UpdateVisible ? false : true;
+        }
+        $scope.get_users = function() {
+        	$http.get('getUser').
     		success(function(data, status, headers, config){
-    			console.log(data);
+    			if (typeof data === 'string') {
+    				$scope.noUsers = data;
+    			} else {
+    				$scope.userList = data;
+    				$scope.showTable = true;
+    			}
     		}).
     		error(function(data, status, headers, config) {
     			alert( "failure message: " + JSON.stringify({data: data}));
     		});
     	};
+    	$scope.del_user = function() {
+    		  var dataObj = {
+    				  searchId : $scope.searchId
+    		}
+    		$http.post('deleteUser', dataObj).
+     		success(function(data, status, headers, config) {
+     			$scope.showStatus = true;
+     			$scope.searchId = "";
+     			$scope.delStatus = data;
+     		}).
+     		error(function(data, status, headers, config) {
+     			alert( "failure message: " + JSON.stringify({data: data}));
+     		});
+     	};
+    	$scope.update_user = function() {
+    		  var upObj = {
+    				 searchId2 : $scope.searchId2,
+    				 updateField : $scope.updateField,
+    				 newValue : $scope.newValue
+    			  }
+    		$http.post('updateUser', upObj).
+     		success(function(data, status, headers, config) {
+     			 $scope.updateStatus = status;
+     			 $scope.updateData = data;
+     		}).
+     		error(function(data, status, headers, config) {
+     			alert( "failure message: " + JSON.stringify({data: data}));
+     		});
+     	};
+       
     });
 
  app.controller('FormController', function ($scope, $http) {

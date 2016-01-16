@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,11 +17,11 @@ import org.json.simple.parser.ParseException;
 import testWebApp.db.DBconn;
 import testWebApp.db.JsonEncodeStorage;
 
-public class UserServlet extends HttpServlet 
+public class UpdateServlet extends HttpServlet 
 {
   private static final long serialVersionUID = 1L;
  
-  public UserServlet()
+  public UpdateServlet()
   {
     super();
   }
@@ -45,23 +46,15 @@ public class UserServlet extends HttpServlet
       joUser = (JSONObject) parser.parse(sb.toString());
     } catch (ParseException e) { e.printStackTrace(); }
 
-    String name = (String) joUser.get("name");
-    String email = (String) joUser.get("email");
-    String telephone = (String) joUser.get("telephone");
-    String street = (String) joUser.get("street");
-    String city = (String) joUser.get("city");
-    String state = (String) joUser.get("state");
-    String zip = (String) joUser.get("zip");
-
-    response.setContentType("application/json");
+    String updateField = (String) joUser.get("updateField");
+    String newValue = (String) joUser.get("newValue");
+    String id = (String)joUser.get("searchId2");
+    int searchId = Integer.parseInt(id);
+    DBconn dbconn = new DBconn();
+    String updateResults = dbconn.updateUser(searchId, updateField, newValue);
     PrintWriter out = response.getWriter();
-    out.print(joUser);
+    out.print(updateResults);
     out.flush();
     out.close();
-    DBconn dbconn = new DBconn();
-    dbconn.addUser(name, email, telephone, street, city, state, zip);
-    JsonEncodeStorage handleJSON = new JsonEncodeStorage();
-    handleJSON.writeToJsonFile(joUser);
-    
   }
 }
